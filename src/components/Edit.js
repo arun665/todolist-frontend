@@ -10,13 +10,13 @@ import LoadingOverlay from 'react-loading-overlay';
 	let {task } = useParams();
 	let { time } = useParams();
 	const [loader,setLoader]=useState(false);
-    const [email, setEmail] = useState(task)
-	const [password, setPassword] = useState('')  
+    const [email, setEmail] = useState('')
+	const [password, setPassword] = useState(task)  
 	async function loginUser(event) {
 		setLoader(true);
 		event.preventDefault()
 
-		const response = await fetch('https://todloistserver.herokuapp.com/'+id, {
+		const response = await fetch('https://todloistserver.herokuapp.com/edit_task/'+id, {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
