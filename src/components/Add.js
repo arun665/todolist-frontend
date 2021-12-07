@@ -1,24 +1,28 @@
 //import { set } from "mongoose";
 import { useState } from "react";
-import {Link} from 'react-router-dom';
+import {Link , useHistory} from 'react-router-dom';
 import LoadingOverlay from 'react-loading-overlay';
 
  function Add(){
-    const [email, setEmail] = useState('')
-	const [password, setPassword] = useState('')
+
+	var history=useHistory();
+    const [time, setTime] = useState('') // for task
+	const [task, setTask] = useState('') // for time 
 	const [loader,setLoader]=useState(false);
 	async function loginUser(event) {
 		setLoader(true);
 		event.preventDefault()
 
+
+		// fetching api to add data to the database
 		const response = await fetch('https://todloistserver.herokuapp.com/add', {
 			method: 'POST',
 			headers: {
 				'Content-Type': 'application/json',
 			},
 			body: JSON.stringify({
-				"username":email,
-				"quote":password
+				"username":time,
+				"quote":task
 			}),
 		})
 
@@ -27,11 +31,11 @@ import LoadingOverlay from 'react-loading-overlay';
 		if (data.status) {
 			localStorage.setItem('token', data.user)
 			alert('Task added  successfully');
-			setEmail('');
-			setPassword('');
+		setTime('');
+			setTask('');
 			setLoader(false);
-
-		//	window.location.href = '/dashboard'
+history.push("/");
+		
 		} else {
 			alert('Please check your username and password');
 			setLoader(false);
@@ -79,24 +83,28 @@ import LoadingOverlay from 'react-loading-overlay';
 
 
 
+{/*----------------------------------------------------form code to add the task starts here---------------------------------------*/}
+
 <div className="container">
 	<h1 style={{"color":"white"}}> Add Task:</h1 >
 			<form onSubmit={loginUser} style={{"borderWidth":"2px","padding":"5%","color":"white"}}>
   <div class="form-group">
     <label for="email">Task:</label>
-    <input type="text" class="form-control"  id="email"   		value={password}
-					onChange={(e) => setPassword(e.target.value)}/>
+    <input type="text" class="form-control"  id="email"   		value={task}
+					onChange={(e) => setTask(e.target.value)}/>
   </div>
   <div class="form-group">
     <label for="pwd">Time:</label>
-    <input type="time" class="form-control"  id="pwd"  	value={email}
-					onChange={(e) => setEmail(e.target.value)}/>
+    <input type="time" class="form-control"  id="pwd"  	value={time}
+					onChange={(e) => setTime(e.target.value)}/>
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
 
+
+{/*----------------------------------------------------form code to add the task ends here---------------------------------------*/}
 
 		</div></LoadingOverlay>
 	)

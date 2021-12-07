@@ -8,8 +8,8 @@ function Add(){
     
     const [loader,setLoader]=useState(true);
 
-    const [username,setUsername]=useState('');
-    const [quote,setQuote]=useState('');
+    const [task,setTask]=useState('');
+    const [time,setTime]=useState('');
     
 
     useEffect(() => {
@@ -23,8 +23,8 @@ function Add(){
            await axios.get('https://todloistserver.herokuapp.com/edit/'+id,)
               .then((res) => {
                 console.log(res);
-      setUsername(res.data.username);
-      setQuote(res.data.quote);
+      setTask(res.data.username);
+      setTime(res.data.quote);
        setLoader(false);
 
               }).catch((err) => {
@@ -80,10 +80,10 @@ function Add(){
 <div class="container">
   <div class="card">
     <div class="card-header">
-<h1>{quote} </h1>
+<h1>{time} </h1>
 </div>
 <div class="card-footer">
-<p>Time:{username}</p>
+<p>Time:{task}</p>
 </div>
     </div>
     </div>

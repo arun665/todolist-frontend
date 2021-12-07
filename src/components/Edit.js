@@ -1,17 +1,22 @@
 //import { set } from "mongoose";
 import { useState } from "react";
-import {Link} from 'react-router-dom';
+import {Link , useHistory} from 'react-router-dom';
 import {useParams} from 'react-router-dom';
 import LoadingOverlay from 'react-loading-overlay';
 
  function Edit(){
-  
+  var history=useHistory();
     let { id } = useParams();
-	let {task } = useParams();
+	let {task} = useParams();
 	let { time } = useParams();
 	const [loader,setLoader]=useState(false);
-    const [email, setEmail] = useState('')
-	const [password, setPassword] = useState(task)  
+    const [tim, setTime] = useState(time);
+	const [tas, setTask] = useState(task);
+	  
+
+
+//---------------------------------------------------------function to add task in list starts here --------------------------------------------
+
 	async function loginUser(event) {
 		setLoader(true);
 		event.preventDefault()
@@ -23,8 +28,8 @@ import LoadingOverlay from 'react-loading-overlay';
 			},
 			body: JSON.stringify({
 
-				"username":email,
-				"quote":password
+				"username":tim,
+				"quote":tas
 			}),
 		})
 
@@ -33,17 +38,18 @@ import LoadingOverlay from 'react-loading-overlay';
 		if (data.status) {
 			localStorage.setItem('token', data.user)
 			alert('Task added  successfully');
-			setEmail('');
-			setPassword('');
+			setTime('');
+			setTask('');
 			setLoader(false);
-
-		//	window.location.href = '/dashboard'
+history.push("/");
 		} else {
 			alert('Please check your username and password');
 			setLoader(false);
 			
 		}
 	}
+
+//---------------------------------------------------------function to add task in list ends here --------------------------------------------
 
 	return (
 			 
@@ -84,25 +90,27 @@ import LoadingOverlay from 'react-loading-overlay';
 
 
 
-
+{/*----------------------------------------------------form code to update the task starts here---------------------------------------*/}
 
 <div className="container">
-	<h1 style={{"color":"white"}}> Add Task:</h1 >
+	<h1 style={{"color":"white"}}> Update Task:</h1 >
 			<form onSubmit={loginUser} style={{"borderWidth":"2px","padding":"5%","color":"white"}}>
   <div class="form-group">
     <label for="email">Task:</label>
-    <input type="text" class="form-control"  id="email"   		value={password}
-					onChange={(e) => setPassword(e.target.value)}/>
+    <input type="text" class="form-control"  id="email"   		value={tas}
+					onChange={(e) => setTask(e.target.value)}/>
   </div>
   <div class="form-group">
     <label for="pwd">Time:</label>
-    <input type="time" class="form-control"  id="pwd"  	value={email}
-					onChange={(e) => setEmail(e.target.value)}/>
+    <input type="time" class="form-control"  id="pwd"  	value={tim}
+					onChange={(e) => setTime(e.target.value)}/>
   </div>
 
   <button type="submit" class="btn btn-primary">Submit</button>
 </form>
 </div>
+
+{/*----------------------------------------------------form code to update the task ends here---------------------------------------*/}
 
 		</div>
 </LoadingOverlay>

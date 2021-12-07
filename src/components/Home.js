@@ -11,10 +11,10 @@ function Home(){
 	const [loader,setLoader]=useState(true);
 
     useEffect(() => {
-        // Update the document title using the browser API
+        // updating the list
         populateQuote()
       });
-
+// fetching the tasks list from the api hosted on heroku----------------------------------------------------------------------
 	async function populateQuote() {
 		try {
            await axios.get('https://todloistserver.herokuapp.com/',)
@@ -36,7 +36,7 @@ setLoader(false);
         }
 
 
-
+// function to delete any task from the list ----------------------------------------------------
         async function deletetask(id) {
           try {
             setLoader(true);
@@ -84,8 +84,8 @@ setLoader(false);
     
 <LoadingOverlay
   active={loader}
-  spinner
-  text='Loading your content...'
+  spinner center
+  text='Loading your content... , Heroku free hosting is quite slow , thats why it  will take some time for loading '
   >
     <>
            
@@ -117,10 +117,10 @@ setLoader(false);
   </div>  
 </nav>
 <br></br>
-   
+   {/*----------------------------------------------------list of the tasks using map ------------------------------------------   */}
      
 {loader ?<h1> Loading... </h1>:
-    <div >
+    <div  >
   <table>
 
 <tr>
@@ -167,6 +167,8 @@ setLoader(false);
       ))} 
       
       </table>
+        {/*---------------------------------------------------------------------------------------------   */}
+   
       </div>
     }
     </></LoadingOverlay>);
